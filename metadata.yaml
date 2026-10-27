@@ -1,6 +1,29 @@
 name: "astrbot_plugin_life_memory"
 display_name: "记忆与生活线"
-desc: "让她有自己的日子：每日日程、事件记忆、人物好感、主动开口、日记与说说，角色可自行更换，带可视化面板"
+short_desc: "让她有自己的日子：日程、记忆、好感、主动开口、日记与说说"
+desc: |
+  给 AstrBot 里的 AI 角色加一条**生活线**：她今天有安排、记得住人、会自己挑时候开口，晚上会写日记。
+
+  - **今天怎么过**：每天用模型排一份日程，聊天时把"此刻在做什么"补进 system_prompt
+  - **她记得的**：从对话里抽事件记忆（谁、什么事、情绪、关键词、过期时间），按人分块
+  - **记忆注入**：每次开口前按人检索最多 3 条（80 字预算），追加到 system_prompt
+  - **人物档案**：好感度、印象、昵称别名，QQ 与网页端身份自动合并
+  - **主动开口**：默认关闭；群里 40 分钟一次、私聊同人 20 小时一次，且要好感度过线
+  - **日记与说说**：晚上写日记（可配图），备一条说说稿，送进发布插件的草稿箱，最后一步人工确认
+  - **可视化面板**：四格状态、日程时间线、按人分块的记忆卡片、三个记录区、外观自定义
+
+  角色名和口头禅可在配置里更换（`persona_name` / `persona_desc` / `persona_catch`），
+  也能选择跟随 AstrBot 的人格设置，不用改代码。
+
+  可选依赖：`astrbot_plugin_image_generation`（配图）、`astrbot_plugin_space_kit`（说说草稿箱）、
+  `astrbot_plugin_quiet_hours`（睡醒时间），都没有也能跑。
 version: "1.0.1"
 author: "tangzhu"
-repo: ""
+repo: "https://github.com/futangzhu/-"
+social_link: "https://github.com/futangzhu"
+tags:
+  - 记忆
+  - 拟人
+  - 主动回复
+  - 日程
+  - LLM
