@@ -16,7 +16,7 @@ import json
 import os
 import re
 
-from . import state, store
+from . import persona, state, store
 
 BLOCK_MIN = 12
 BLOCK_MAX = 16
@@ -288,7 +288,7 @@ def ensure_prompt_file() -> str:
         os.makedirs(os.path.dirname(path), exist_ok=True)
         if not os.path.exists(path):
             with open(path, "w", encoding="utf-8") as f:
-                f.write(SYSTEM)
+                f.write(persona.apply(SYSTEM))
     except OSError:
         pass
     return path
@@ -308,7 +308,7 @@ def system_prompt() -> str:
             return text
     except OSError:
         pass
-    return SYSTEM
+    return persona.apply(SYSTEM)
 
 
 async def ensure_day(provider, day: datetime.date | None = None, force: bool = False) -> dict | None:

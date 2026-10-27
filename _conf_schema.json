@@ -107,6 +107,24 @@
     "default": "Asia/Shanghai",
     "hint": "决定「今天」是哪天、几点算晚上、日程怎么切。不在东八区就改这里，比如 Europe/Berlin"
   },
+  "persona_name": {
+    "description": "角色名字（提示词里怎么称呼她）",
+    "type": "string",
+    "default": "大肥鱼",
+    "hint": "留空或保持默认就是作者那只；换成你自己的角色名即可，提示词会自动替换"
+  },
+  "persona_desc": {
+    "description": "角色身份一句话（替换掉“住在机器里的 AI 鲸鱼娘”）",
+    "type": "string",
+    "default": "",
+    "hint": "留空=保持出厂设定。填了才会替换，比如“住在旧书店楼上的猫娘”"
+  },
+  "persona_catch": {
+    "description": "她的口头禅/黑话（原文里把 token 叫“白饭”的那个词）",
+    "type": "string",
+    "default": "白饭",
+    "hint": "留空或保持默认不变；换了以后提示词里所有“白饭”都会跟着换"
+  },
   "docs_dir": {
     "description": "/文档 命令去哪个目录找笔记",
     "type": "string",

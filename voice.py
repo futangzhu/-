@@ -21,7 +21,7 @@ from __future__ import annotations
 import logging
 import re
 
-from . import state, store
+from . import persona, state, store
 
 LOG = logging.getLogger("astrbot")
 
@@ -69,7 +69,7 @@ SYSTEM = """你在替一个角色说一句话。她叫大肥鱼，是住在自�
 
 def clean(text: str, max_chars: int) -> str:
     t = (text or "").strip()
-    t = re.sub(r"^(她说|大肥鱼说|回复)[：:]\s*", "", t)
+    t = re.sub(r"^(" + persona.prefix_pattern() + r")[：:]\s*", "", t)
     t = t.strip().strip("“”\"'「」『』").replace("\n", " ").strip()
     if len(t) > max_chars:
         t = t[:max_chars].rstrip("，,、；;")
@@ -110,7 +110,7 @@ async def say(provider, kind: str, info: dict | None = None, session: str = "") 
     spec = SPECS[kind]
     try:
         resp = await provider.text_chat(prompt=build_prompt(kind, info, session),
-                                        system_prompt=SYSTEM)
+                                        system_prompt=persona.apply(SYSTEM))
         text = clean(getattr(resp, "completion_text", "") or "", spec["max"])
     except Exception as e:  # noqa: BLE001
         LOG.warning(f"[life_memory] 口吻生成失败（{kind}）：{e}")

@@ -14,7 +14,7 @@ from __future__ import annotations
 import datetime
 import re
 
-from . import recall, relation, state, store
+from . import persona, recall, relation, state, store
 
 MAX_CHARS = 40
 SYSTEM = """你在替一个角色说一句话。她叫大肥鱼，是住在机器里的 AI 鲸鱼娘，把 token 叫"白饭"。
@@ -40,7 +40,7 @@ SYSTEM = """你在替一个角色说一句话。她叫大肥鱼，是住在机�
 def clean(text: str) -> str:
     """把模型输出收拾成可以直接发的一句话。"""
     t = (text or "").strip()
-    t = re.sub(r"^(她说|大肥鱼说|回复)[：:]\s*", "", t)
+    t = re.sub(r"^(" + persona.prefix_pattern() + r")[：:]\s*", "", t)
     t = t.strip().strip("“”\"'「」『』")
     t = re.sub(r"\s*\n+\s*", " ", t).strip()
     if len(t) > MAX_CHARS:
@@ -143,7 +143,7 @@ async def compose(provider, session: str, now: datetime.datetime | None = None) 
     for attempt in range(2):
         ask = prompt if not (avoid_action and attempt == 0) else (
             prompt + "\n这一句不要用括号里的动作开头，直接说话。")
-        resp = await provider.text_chat(prompt=ask, system_prompt=SYSTEM)
+        resp = await provider.text_chat(prompt=ask, system_prompt=persona.apply(SYSTEM))
         text = clean(getattr(resp, "completion_text", "") or "")
         if not text or looks_like_customer_service(text):
             continue

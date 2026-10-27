@@ -1,6 +1,6 @@
 name: "astrbot_plugin_life_memory"
 display_name: "记忆与生活线"
-desc: "让她有自己的日子：每日日程、事件记忆、人物好感、主动开口、日记与说说，带一个可视化面板"
-version: "0.2.0"
+desc: "让她有自己的日子：每日日程、事件记忆、人物好感、主动开口、日记与说说，角色可自行更换，带可视化面板"
+version: "1.0.0"
 author: "tangzhu"
 repo: ""

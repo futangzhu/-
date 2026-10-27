@@ -21,8 +21,8 @@ from astrbot.core.message.message_event_result import MessageChain
 from astrbot.api.star import Context, Star
 from quart import jsonify, request
 
-from . import (dayplan, diary, extract, gate, mood, moments, proactivity, recall,
-               paths, relation, rollup, scenes, speak, state, store, voice, work)
+from . import (dayplan, diary, extract, gate, mood, moments, persona, proactivity,
+               recall, paths, relation, rollup, scenes, speak, state, store, voice, work)
 
 LOG = logging.getLogger("astrbot")
 PLUGIN_NAME = "astrbot_plugin_life_memory"
@@ -54,6 +54,7 @@ class LifeMemory(Star):
     async def initialize(self) -> None:
         try:
             store.set_timezone(self.config.get("timezone") or "Asia/Shanghai")
+            persona.set_from_config(self.config)
             store.init_db()
             dayplan.ensure_prompt_file()
             self._register_web_apis()

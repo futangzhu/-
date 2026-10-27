@@ -14,7 +14,7 @@ from __future__ import annotations
 import json
 import re
 
-from . import store
+from . import persona, store
 
 MAX_EVENTS = 3
 MAX_SUMMARY = 40
@@ -127,7 +127,7 @@ async def extract(provider, user_text: str, bot_text: str = "") -> tuple[dict, l
     if provider is None:
         raise ExtractError("没有可用 provider")
     prompt = f"用户说：{user_text}\n\n她说：{bot_text or '（没有回复）'}"
-    resp = await provider.text_chat(prompt=prompt, system_prompt=SYSTEM)
+    resp = await provider.text_chat(prompt=prompt, system_prompt=persona.apply(SYSTEM))
     text = getattr(resp, "completion_text", "") or ""
     return validate(extract_json(text))
 
