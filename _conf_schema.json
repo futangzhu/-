@@ -125,6 +125,12 @@
     "default": "白饭",
     "hint": "留空或保持默认不变；换了以后提示词里所有“白饭”都会跟着换"
   },
+  "persona_follow_astrbot": {
+    "type": "bool",
+    "default": false,
+    "description": "让\"她自己开口\"的那几次调用也跟随 AstrBot 的人格",
+    "hint": "默认关闭。开启后，抽记忆/主动开口/分身汇报/写日记/排日程会把 AstrBot 当前人格的前 400 字拼到最前面，换人格时口吻能跟着统一；关着就用插件自带的角色设定。"
+  },
   "docs_dir": {
     "description": "/文档 命令去哪个目录找笔记",
     "type": "string",

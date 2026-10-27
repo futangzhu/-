@@ -110,7 +110,7 @@ async def say(provider, kind: str, info: dict | None = None, session: str = "") 
     spec = SPECS[kind]
     try:
         resp = await provider.text_chat(prompt=build_prompt(kind, info, session),
-                                        system_prompt=persona.apply(SYSTEM))
+                                        system_prompt=persona.system(SYSTEM))
         text = clean(getattr(resp, "completion_text", "") or "", spec["max"])
     except Exception as e:  # noqa: BLE001
         LOG.warning(f"[life_memory] 口吻生成失败（{kind}）：{e}")

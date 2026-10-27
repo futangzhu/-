@@ -143,7 +143,7 @@ async def compose(provider, session: str, now: datetime.datetime | None = None) 
     for attempt in range(2):
         ask = prompt if not (avoid_action and attempt == 0) else (
             prompt + "\n这一句不要用括号里的动作开头，直接说话。")
-        resp = await provider.text_chat(prompt=ask, system_prompt=persona.apply(SYSTEM))
+        resp = await provider.text_chat(prompt=ask, system_prompt=persona.system(SYSTEM))
         text = clean(getattr(resp, "completion_text", "") or "")
         if not text or looks_like_customer_service(text):
             continue

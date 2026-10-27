@@ -99,7 +99,7 @@ async def generate(provider, day: str | None = None) -> dict:
     for attempt in range(2):
         ask = prompt if attempt == 0 else (
             prompt + "\n上一版像流水账（从早写到晚）。重写：只写一两件事，或一个念头。")
-        resp = await provider.text_chat(prompt=ask, system_prompt=persona.apply(SYSTEM))
+        resp = await provider.text_chat(prompt=ask, system_prompt=persona.system(SYSTEM))
         raw = getattr(resp, "completion_text", "") or ""
         try:
             text = validate(raw)

@@ -55,6 +55,7 @@ class LifeMemory(Star):
         try:
             store.set_timezone(self.config.get("timezone") or "Asia/Shanghai")
             persona.set_from_config(self.config)
+            persona.set_context(self.context)
             store.init_db()
             dayplan.ensure_prompt_file()
             self._register_web_apis()

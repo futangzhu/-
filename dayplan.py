@@ -328,7 +328,7 @@ async def ensure_day(provider, day: datetime.date | None = None, force: bool = F
     for attempt in range(2):
         ask = prompt if not last_err else f"{prompt}\n\n上一次没通过，问题：{last_err}\n请修正后重新只输出 JSON。"
         try:
-            resp = await provider.text_chat(prompt=ask, system_prompt=system_prompt())
+            resp = await provider.text_chat(prompt=ask, system_prompt=persona.system(system_prompt()))
             text = getattr(resp, "completion_text", "") or ""
             plan = parse_plan(text)
         except PlanError as e:
