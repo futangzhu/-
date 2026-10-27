@@ -476,11 +476,20 @@
     ]);
   }
 
+  // 每条路由自己的超时。原来是全场 8000ms——排日程要调模型，十几秒起步，
+  // 前端先超时、后端其实还在生成，于是"点了报失败，刷新又有计划"。
+  const TIMEOUTS = {
+    overview: 8000, logs: 8000, work: 8000, memory: 20000,
+    replan: 90000, preview: 30000, moment: 60000,
+    config: 10000, theme_get: 8000, theme_set: 15000,
+    memory_edit: 15000, memory_del: 15000,
+  };
+
   async function call(kind, route, body) {
     const b = await bridgeReady;
     if (!b) throw new Error("桥接脚本没有出现——多半是直接打开了 html，而不是从面板进来");
     const fn = kind === "get" ? b.apiGet : b.apiPost;
-    return withTimeout(fn.call(b, route, body || {}), 8000, route);
+    return withTimeout(fn.call(b, route, body || {}), TIMEOUTS[route] || 8000, route);
   }
   const get = (r) => call("get", r);
   const post = (r, b) => call("post", r, b);
@@ -1109,12 +1118,25 @@
   };
 
   if ($("btn-replan")) $("btn-replan").onclick = async () => {
-    say("正在重排，可能要十几秒…");
+    const btn = $("btn-replan");
+    if (btn.disabled) return;
+    const old = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = "重排中…";
+    say("正在重排（模型要现写一份日程，通常 10–30 秒，慢的时候更久）…");
     try {
       const r = await post("replan");
-      say(r.ok ? "已重排：" + (r.mood || "") : "重排失败：" + (r.error || ""));
-    } catch (e) { say("重排失败：" + e); }
-    load();
+      say(r.ok
+        ? "已重排：" + (r.mood || "") + "（" + ((r.blocks || []).length) + " 个时段）"
+        : "重排失败：" + (r.error || ""));
+      if (r.ok) await load();
+    } catch (e) {
+      say("重排失败：" + (e && e.message ? e.message : e) +
+          "\n服务器那边可能已经写完了，刷新一下页面看看。");
+    } finally {
+      btn.disabled = false;
+      btn.textContent = old;
+    }
   };
 
   if ($("btn-preview")) $("btn-preview").onclick = async () => {

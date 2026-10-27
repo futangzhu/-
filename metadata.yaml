@@ -17,7 +17,7 @@ desc: |
 
   可选依赖：`astrbot_plugin_image_generation`（配图）、`astrbot_plugin_space_kit`（说说草稿箱）、
   `astrbot_plugin_quiet_hours`（睡醒时间），都没有也能跑。
-version: "1.0.2"
+version: "1.0.3"
 author: "tangzhu"
 repo: "https://github.com/futangzhu/-"
 social_link: "https://github.com/futangzhu"
