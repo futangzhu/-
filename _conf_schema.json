@@ -1,0 +1,116 @@
+{
+  "extract_enabled": {
+    "type": "bool",
+    "description": "是否自动抽取记忆（从对话里记下关于某人的事）",
+    "default": true
+  },
+  "extract_private_all": {
+    "type": "bool",
+    "description": "所有私聊都抽取（群聊另由 extract_sessions 指定）",
+    "default": true
+  },
+  "extract_sessions": {
+    "type": "list",
+    "description": "额外要抽取的群会话 id（只填群，不要填私聊）",
+    "default": [],
+    "hint": "群号要你自己填：先让她在群里说一句，再看日志里的 session id"
+  },
+  "extract_hourly_limit": {
+    "type": "int",
+    "description": "每个会话每小时最多抽取几次",
+    "default": 10
+  },
+  "proactive_enabled": {
+    "type": "bool",
+    "description": "群里是否允许她主动开口",
+    "default": false
+  },
+  "proactive_sessions": {
+    "type": "list",
+    "description": "允许主动开口的群 id（只填群）",
+    "default": []
+  },
+  "proactive_private_enabled": {
+    "type": "bool",
+    "description": "私聊里是否允许她主动找人（好感度需达标）",
+    "default": false
+  },
+  "moment_auto": {
+    "type": "bool",
+    "description": "日记写完后自动备一条说说稿",
+    "default": true
+  },
+  "moment_forward_target": {
+    "type": "string",
+    "description": "说说发布后转发到哪个群（留空不转发）",
+    "default": ""
+  },
+  "diary_hour": {
+    "type": "string",
+    "description": "几点写当天日记（HH:MM）",
+    "default": "22:30"
+  },
+  "evening_report_enabled": {
+    "type": "bool",
+    "description": "睡前是否发一条晚报",
+    "default": true
+  },
+  "evening_report_time": {
+    "type": "string",
+    "description": "晚报时间（HH:MM）",
+    "default": "23:00"
+  },
+  "evening_report_target": {
+    "type": "string",
+    "description": "晚报发给谁（账号 id）",
+    "default": ""
+  },
+  "master_ids": {
+    "type": "list",
+    "description": "主人的账号 id（QQ 号与面板用户名都填），她会认这个身份",
+    "default": [],
+    "hint": "必填。QQ 号 + 面板用户名都填进来，她只认这里的身份"
+  },
+  "diary_publish_hour": {
+    "type": "string",
+    "description": "日记/说说自动发布的时间",
+    "hint": "半成品重写的检查点默认挂在它前一小时，见下一项。",
+    "default": "23:00"
+  },
+  "diary_rewrite_hour": {
+    "type": "string",
+    "description": "半成品重写的检查点（留空=发布前一小时）",
+    "hint": "白天之前写好的日记算半成品；到这个点还没被重写成完整的，就重写一遍。",
+    "default": ""
+  },
+  "online_check": {
+    "description": "发送前先探活（平台掉线时改走队列/丢弃）",
+    "type": "bool",
+    "default": true,
+    "hint": "关掉就恢复旧行为：直接发，失败也不知道"
+  },
+  "pending_expire_minutes": {
+    "description": "私聊待发消息的有效期（分钟）",
+    "type": "int",
+    "default": 180,
+    "hint": "超过这个时间的积压消息不再补发，直接丢弃。0=不过期"
+  },
+  "retry_interval_seconds": {
+    "description": "补发队列扫描间隔（秒）",
+    "type": "int",
+    "default": 300,
+    "hint": "掉线通常不是一时半会，5 分钟扫一次够用；最小 30 秒"
+  },
+  "timezone": {
+    "description": "时区（IANA 名称）",
+    "type": "string",
+    "default": "Asia/Shanghai",
+    "hint": "决定「今天」是哪天、几点算晚上、日程怎么切。不在东八区就改这里，比如 Europe/Berlin"
+  },
+  "docs_dir": {
+    "description": "/文档 命令去哪个目录找笔记",
+    "type": "string",
+    "default": "",
+    "hint": "目录里的文件名是固定的：指令清单.md、大肥鱼功能总览.md、projects/memory-life/交接-20261026.md、人格卡.md。留空=用默认目录，目录不在就提示一句、不影响别的功能"
+  }
+}

@@ -1,0 +1,23 @@
+# 运行产物，不要进仓库
+__pycache__/
+*.py[cod]
+*.pyo
+
+# 本地数据（memory.db 里是真实聊天记忆，绝不外发）
+data/
+*.db
+*.db-wal
+*.db-shm
+*.json.bak*
+
+# 备份与回归文件
+*.bak
+*.bak-*
+*.orig
+_legacy/
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
